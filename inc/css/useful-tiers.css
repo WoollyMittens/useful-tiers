@@ -57,8 +57,10 @@
 }
 /* line 31, ../../src/scss/useful-tiers.scss */
 #useful-tiers-list li {
-  transition-property: transform;
-  transition-duration: 500ms;
+  -webkit-transition-property: -webkit-transform;
+          transition-property: transform;
+  -webkit-transition-duration: 500ms;
+          transition-duration: 500ms;
   display: inline-block;
   margin: 0 -0.3em 0 0;
   padding: 0;
@@ -74,10 +76,14 @@
 /* line 45, ../../src/scss/useful-tiers.scss */
 #useful-tiers-list .tiers-show {
   position: static;
-  transform: scale(1);
+  -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+          transform: scale(1);
 }
 /* line 49, ../../src/scss/useful-tiers.scss */
 #useful-tiers-list .tiers-hide {
   position: absolute;
-  transform: scale(0);
+  -webkit-transform: scale(0);
+      -ms-transform: scale(0);
+          transform: scale(0);
 }
