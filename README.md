@@ -21,7 +21,7 @@ This include can be added to the header or placed inline before the script is in
 ## How to start the script
 
 ```javascript
-var tiers = new useful.Tiers({
+var tiers = new useful.Tiers().init({
 	form : document.querySelector('#useful-tiers-form'),
 	elements : document.querySelectorAll('#useful-tiers-list li'),
 	active : 'none',
