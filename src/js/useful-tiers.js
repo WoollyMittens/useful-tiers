@@ -6,41 +6,41 @@
 	This work is licensed under a Creative Commons Attribution 3.0 Unported License.
 */
 
-// create the constructor if needed
+// create the global object if needed
 var useful = useful || {};
-useful.Tiers = useful.Tiers || function () {};
 
-// extend the constructor
-useful.Tiers.prototype.init = function (model) {
+// extend the global object
+useful.Tiers = function () {
 
 	// PROPERTIES
 
 	"use strict";
-	this.model = model;
 
 	// METHODS
 
-	this.start = function () {
+	this.start = function (config) {
+		// store the configuration
+		this.config = config;
 		// create the interface
-		var form = this.model.form;
+		var form = this.config.form;
 		form.addEventListener('submit', this.onFormSubmitted());
 		// add the fieldset
 		this.fieldset = document.createElement('fieldset');
 		form.appendChild(this.fieldset);
 		// add the fields to the fieldset
 		this.updateFieldset();
-		// disable the start function so it can't be started twice
-		this.init = function () {};
+		// return the object
+		return this;
 	};
 
 	this.applyFilter = function () {
 		// get the keyword to go with the active filter
 		var element, result,
-			active = this.model.active,
-			keyword = (active !== 'none') ? this.model.filters[active].regex : new RegExp('');
+			active = this.config.active,
+			keyword = (active !== 'none') ? this.config.filters[active].regex : new RegExp('');
 		// filter all elements based on the keyword
-		for (var a = 0, b = this.model.elements.length; a < b; a += 1) {
-			element = this.model.elements[a];
+		for (var a = 0, b = this.config.elements.length; a < b; a += 1) {
+			element = this.config.elements[a];
 			console.log(keyword, element.getAttribute('data-key'));
 			result = keyword.test(element.getAttribute('data-key'));
 			console.log(result);
@@ -55,10 +55,10 @@ useful.Tiers.prototype.init = function (model) {
 		this.fieldset.innerHTML = '';
 		// add the legend
 		var legend = document.createElement('legend');
-		legend.innerHTML = this.model.title;
+		legend.innerHTML = this.config.title;
 		this.fieldset.appendChild(legend);
 		// add the filter tiers to the fieldset
-		var tiers = this.addSelectors(this.model.active, []);
+		var tiers = this.addSelectors(this.config.active, []);
 		tiers = tiers.reverse();
 		for (var a = 0, b = tiers.length; a < b; a += 1) {
 			this.fieldset.appendChild(tiers[a]);
@@ -69,8 +69,8 @@ useful.Tiers.prototype.init = function (model) {
 		// construct the label of the fiter tier
 		var label = document.createElement('label');
 		label.innerHTML = (active === 'none') ?
-			this.model.labels.prefix + this.model.labels.first:
-			this.model.labels.prefix + this.model.filters[active].title;
+			this.config.labels.prefix + this.config.labels.first:
+			this.config.labels.prefix + this.config.filters[active].title;
 		// construct the selector of the filter tier
 		var select = document.createElement('select');
 		select.setAttribute('name', 'tier_' + selectors.length);
@@ -78,9 +78,9 @@ useful.Tiers.prototype.init = function (model) {
 		// add the matching options to the selector
 		var name, count = 0, option = this.addOption('none');
 		select.appendChild(option);
-		for (name in this.model.filters) {
+		for (name in this.config.filters) {
 			// if this is a child of the active item
-			if (active === this.model.filters[name].parent) {
+			if (active === this.config.filters[name].parent) {
 				// count and add the option
 				count += 1;
 				option = this.addOption(name, previous);
@@ -94,9 +94,9 @@ useful.Tiers.prototype.init = function (model) {
 			selectors.push(label);
 		}
 		// if the parent isn't null
-		if (this.model.filters[active]) {
+		if (this.config.filters[active]) {
 			// recurse
-			return this.addSelectors(this.model.filters[active].parent, selectors, active);
+			return this.addSelectors(this.config.filters[active].parent, selectors, active);
 		}
 		// else return the tiers
 		else { return selectors; }
@@ -106,7 +106,7 @@ useful.Tiers.prototype.init = function (model) {
 		// create the option
 		var option = document.createElement('option');
 		option.setAttribute('value', name);
-		option.innerHTML = (name !== 'none') ? this.model.filters[name].title : this.model.labels.empty;
+		option.innerHTML = (name !== 'none') ? this.config.filters[name].title : this.config.labels.empty;
 		option.selected = (active === name);
 		return option;
 	};
@@ -127,7 +127,7 @@ useful.Tiers.prototype.init = function (model) {
 		var _this = this;
 		return function (evt) {
 			// use the value of the section or the fallback
-			_this.model.active = (select.value === _this.model.labels.empty) ? parent : select.value;
+			_this.config.active = (select.value === _this.config.labels.empty) ? parent : select.value;
 			// update the form
 			_this.updateFieldset();
 			// apply the filter
@@ -135,7 +135,7 @@ useful.Tiers.prototype.init = function (model) {
 		};
 	};
 
-	// PUBLIC
+	// EXTERNAL
 
 	this.reset = function () {
 		// update empty
@@ -144,17 +144,12 @@ useful.Tiers.prototype.init = function (model) {
 
 	this.update = function (active) {
 		// add the new active keyword
-		this.model.active = active;
+		this.config.active = active;
 		// update the form
 		this.updateFieldset();
 		// apply the filter
 		this.applyFilter();
 	};
-
-	// STARTUP
-
-	this.start();
-	return this;
 
 };
 
