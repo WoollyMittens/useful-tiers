@@ -18,7 +18,7 @@ useful.Tiers = function () {
 
 	// METHODS
 
-	this.start = function (config) {
+	this.init = function (config) {
 		// store the configuration
 		this.config = config;
 		// create the interface
