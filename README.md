@@ -2,7 +2,7 @@
 
 Applies tiered filters to a generic collection of content items.
 
-Try the <a href="http://www.woollymittens.nl/useful/default.php?url=useful-tiers">demo</a>.
+Try the <a href="http://www.woollymittens.nl/default.php?url=useful-tiers">demo</a>.
 
 ## How to include the script
 
