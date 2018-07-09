@@ -1,4 +1,4 @@
-# useful.tiers.js: Tiered Filtering
+# tiers.js: Tiered Filtering
 
 Applies tiered filters to a generic collection of content items.
 
@@ -9,19 +9,19 @@ Try the <a href="http://www.woollymittens.nl/default.php?url=useful-tiers">demo<
 The stylesheet is best included in the header of the document.
 
 ```html
-<link rel="stylesheet" href="./css/useful-tiers.css"/>
+<link rel="stylesheet" href="./css/tiers.css"/>
 ```
 
 This include can be added to the header or placed inline before the script is invoked.
 
 ```html
-<script src="./js/useful-tiers.js"></script>
+<script src="./js/tiers.js"></script>
 ```
 
 ## How to start the script
 
 ```javascript
-var tiers = new useful.Tiers().init({
+var tiers = new Tiers({
 	form : document.querySelector('#useful-tiers-form'),
 	elements : document.querySelectorAll('#useful-tiers-list li'),
 	active : 'none',

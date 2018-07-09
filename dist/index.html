@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>useful.tiers.js: Tiered Filtering</title>
+		<title>tiers.js: Tiered Filtering</title>
 		<style>
 			html { font-family:Sans-Serif; font-size:75%; height:100%; }
 			body { _height:100%; line-height:180%; margin:0; min-height:100%; padding:1%; }
@@ -11,12 +11,6 @@
 			.example-left > article, .example-left > aside { width:48%; padding:1%; float:left; }
 			.example-right > article, .example-right > aside { width:48%; padding:1%; float:right; }
 		</style>
-		<!--[if lte IE 9]>
-			<meta http-equiv="imagetoolbar" content="no"/>
-			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-            <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
-		<![endif]-->
 	</head>
 	<body>
 		<section class="example example-right">
@@ -28,9 +22,9 @@
 			<aside>
 
 				<!-- Cut below this -->
-				<style>@import url("./css/useful-tiers.css");</style>
-				<form id="useful-tiers-form"></form>
-				<ul id="useful-tiers-list">
+				<style>@import url("./css/tiers.css");</style>
+				<form id="tiers-form"></form>
+				<ul id="tiers-list">
 					<li data-key="malta.fauna.cat" class="tiers-show"><img alt="" src="./img/figure_0.jpg"/></li>
 					<li data-key="malta.scenery.city" class="tiers-show"><img alt="" src="./img/figure_7.jpg"/></li>
 					<li data-key="australia.scenery.waterfall" class="tiers-show"><img alt="" src="./img/photo_1.jpg"/></li>
@@ -52,13 +46,13 @@
 					<li data-key="malta.scenery.coast" class="tiers-show"><img alt="" src="./img/figure_4.jpg"/></li>
 					<li data-key="australia.fauna.bird" class="tiers-show"><img alt="" src="./img/photo_8.jpg"/></li>
 				</ul>
-				<script src="./js/useful-tiers.js"></script>
+				<script src="./js/tiers.js"></script>
 				<script>
 				//<!--
 					// create a new instance of the script
-					var tiers = new useful.Tiers().init({
-						form : document.querySelector('#useful-tiers-form'),
-						elements : document.querySelectorAll('#useful-tiers-list li'),
+					var tiers = new Tiers({
+						form : document.querySelector('#tiers-form'),
+						elements : document.querySelectorAll('#tiers-list li'),
 						active : 'none',
 						title : 'Filter by:',
 						labels : {

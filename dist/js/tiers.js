@@ -1,20 +1,15 @@
 /*
 	Source:
-	van Creij, Maurice (2014). "useful.tiers.js: Tiered Filtering", version 20141127, http://www.woollymittens.nl/.
+	van Creij, Maurice (2018). "tiers.js: Tiered Filtering", http://www.woollymittens.nl/.
 
 	License:
 	This work is licensed under a Creative Commons Attribution 3.0 Unported License.
 */
 
-// create the global object if needed
-var useful = useful || {};
-
-// extend the global object
-useful.Tiers = function () {
+// establish the class
+var Tiers = function (config) {
 
 	// PROPERTIES
-
-	"use strict";
 
 	// METHODS
 
@@ -23,7 +18,7 @@ useful.Tiers = function () {
 		this.config = config;
 		// create the interface
 		var form = this.config.form;
-		form.addEventListener('submit', this.onFormSubmitted());
+		form.addEventListener('submit', this.onFormSubmitted.bind(this));
 		// add the fieldset
 		this.fieldset = document.createElement('fieldset');
 		form.appendChild(this.fieldset);
@@ -74,7 +69,7 @@ useful.Tiers = function () {
 		// construct the selector of the filter tier
 		var select = document.createElement('select');
 		select.setAttribute('name', 'tier_' + selectors.length);
-		select.addEventListener('change', this.onSelectChanged(select, active));
+		select.addEventListener('change', this.onSelectChanged.bind(this, select, active));
 		// add the matching options to the selector
 		var name, count = 0, option = this.addOption('none');
 		select.appendChild(option);
@@ -113,26 +108,20 @@ useful.Tiers = function () {
 
 	// EVENTS
 
-	this.onFormSubmitted = function () {
-		var _this = this;
-		return function (evt) {
-			// cancel the click
-			evt.preventDefault();
-			// apply the filter
-			_this.applyFilter();
-		};
+	this.onFormSubmitted = function (evt) {
+		// cancel the click
+		evt.preventDefault();
+		// apply the filter
+		this.applyFilter();
 	};
 
-	this.onSelectChanged = function (select, parent) {
-		var _this = this;
-		return function (evt) {
-			// use the value of the section or the fallback
-			_this.config.active = (select.value === _this.config.labels.empty) ? parent : select.value;
-			// update the form
-			_this.updateFieldset();
-			// apply the filter
-			_this.applyFilter();
-		};
+	this.onSelectChanged = function (select, parent, evt) {
+		// use the value of the section or the fallback
+		this.config.active = (select.value === this.config.labels.empty) ? parent : select.value;
+		// update the form
+		this.updateFieldset();
+		// apply the filter
+		this.applyFilter();
 	};
 
 	// EXTERNAL
@@ -151,9 +140,10 @@ useful.Tiers = function () {
 		this.applyFilter();
 	};
 
+	this.init(config);
 };
 
 // return as a require.js module
 if (typeof module !== 'undefined') {
-	exports = module.exports = useful.Tiers;
+	exports = module.exports = Tiers;
 }
