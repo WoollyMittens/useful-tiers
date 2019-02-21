@@ -144,6 +144,5 @@ var Tiers = function (config) {
 };
 
 // return as a require.js module
-if (typeof module !== 'undefined') {
-	exports = module.exports = Tiers;
-}
+if (typeof define != 'undefined') define(['tiers'], function () { return Tiers });
+if (typeof module != 'undefined') module.exports = Tiers;
