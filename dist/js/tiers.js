@@ -36,9 +36,7 @@ var Tiers = function (config) {
 		// filter all elements based on the keyword
 		for (var a = 0, b = this.config.elements.length; a < b; a += 1) {
 			element = this.config.elements[a];
-			console.log(keyword, element.getAttribute('data-key'));
 			result = keyword.test(element.getAttribute('data-key'));
-			console.log(result);
 			element.className = (result) ?
 				element.className.replace(/-hide/, '-show'):
 				element.className.replace(/-show/, '-hide');
@@ -144,6 +142,5 @@ var Tiers = function (config) {
 };
 
 // return as a require.js module
-if (typeof module !== 'undefined') {
-	exports = module.exports = Tiers;
-}
+if (typeof define != 'undefined') define([], function () { return Tiers });
+if (typeof module != 'undefined') module.exports = Tiers;

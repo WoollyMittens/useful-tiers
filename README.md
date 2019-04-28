@@ -9,13 +9,29 @@ Try the <a href="http://www.woollymittens.nl/default.php?url=useful-tiers">demo<
 The stylesheet is best included in the header of the document.
 
 ```html
-<link rel="stylesheet" href="./css/tiers.css"/>
+<link rel="stylesheet" href="css/tiers.css"/>
 ```
 
 This include can be added to the header or placed inline before the script is invoked.
 
 ```html
-<script src="./js/tiers.js"></script>
+<script src="js/tiers.js"></script>
+```
+
+Or use [Require.js](https://requirejs.org/).
+
+```js
+requirejs([
+	'js/tiers.js'
+], function(Tiers) {
+	...
+});
+```
+
+Or import into an MVC framework.
+
+```js
+var Tiers = require('js/tiers.js');
 ```
 
 ## How to start the script
